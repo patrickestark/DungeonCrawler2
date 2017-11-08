@@ -22,6 +22,7 @@ import actors.Player;
 import actors.TestActor;
 import archive.Archiver;
 import assetManager.AssetManager;
+import ecu.se.gui.Button;
 import ecu.se.gui.HUD;
 import ecu.se.map.Map;
 import ecu.se.map.Tile;
@@ -68,6 +69,7 @@ public class Game extends ApplicationAdapter {
 	    camera = new OrthographicCamera(screenWidth, screenHeight);
 		batch = new SpriteBatch();
 		shaperRenderer = new ShapeRenderer();
+		
 		
 		// RECORDS
 		Archiver.startArchiver();
