@@ -24,6 +24,7 @@ public class HUD {
     private final float defaultHeight = 1080.0f;
     private float conversionX;
     private float conversionY; 
+    private Button buttons;
     
     
     
@@ -36,17 +37,20 @@ public class HUD {
     
     public HUD (Player player, int screenWidth, int screenHeight) {
         this.player = player;
-        halfWidth = (int)(screenWidth * 0.5);
+        halfWidth = (int)(screenWidth * .5);
         conversionX = screenWidth / defaultWidth; 
                 
-        halfHeight = (int)(screenHeight *0.5);
+        halfHeight = (int)(screenHeight *.5);
         conversionY = screenHeight / defaultHeight;
         
         hudCamera = new OrthographicCamera(screenWidth, screenHeight);
         font = AssetManager.getFont("font/font_jay.ttf").getFont();
         
-        textureAsset = AssetManager.getTexture("texture/hud/gui_test.png");
+        textureAsset = AssetManager.getTexture("texture/hud/exitButton2.png");
         texture = textureAsset.getTexture();
+        
+        buttons = new Button();
+        buttons.create();
     }
     
     public void update (float deltaTime) {
@@ -59,11 +63,11 @@ public class HUD {
         // RENDER CODE HERE
         
         
-        batch.draw(texture, getProportionalX(0), getProportionalY(0), convertX(1920), convertY(1080));
+        batch.draw(texture, getProportionalX(1920-120), getProportionalY(1080-60), convertX(120), convertY(67));
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), getProportionalX(20), getProportionalY(1080-40));
         font.draw(batch, "Player Position: " + player.getPosition().toString(), getProportionalX(20), getProportionalY(1080-60));
         font.draw(batch, "Camera Position: " + hudCamera.position.toString(), getProportionalX(20), getProportionalY(1080-80));
-        font.draw(batch, "Player Mana: " + player.getMana(), getProportionalX(20), getProportionalY(1080-100));
+        buttons.render();
         
         // END RENDER CODE
         batch.setProjectionMatrix(oldProjectionMatrix);
