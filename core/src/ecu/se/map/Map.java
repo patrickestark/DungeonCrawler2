@@ -178,11 +178,11 @@ public class Map {
 		int lowestIndex = 0;
 		for(int i = 0; i < 7; i++)
 		{
-			if(dirCost.get(lowestIndex).z > dirCost.get(i).z)
+			if(dirCost.get(lowestIndex).z > dirCost.get(i + 1).z)
 			{
-				lowestIndex = i;
+				lowestIndex = i + 1;
 			}
 		}
-		return dirCost.get(lowestIndex);
+		return null;
 	}
 }
