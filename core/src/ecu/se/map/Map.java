@@ -134,6 +134,7 @@ public class Map {
 			
 			closed.add(newCurrent);
 			open.remove(newCurrent);
+			//System.out.println(size(open));
 			
 			endTest =new Vector2(newCurrent.x,newCurrent.y);
 			
@@ -145,6 +146,7 @@ public class Map {
 			
 			
 			}
+		 
 		   for(int count = 0; count < size(closed); count++) {
 			
 			if(closed.get(count).z == newCurrent.z) {
@@ -214,6 +216,7 @@ public class Map {
 		int size=0;
 		
 		while (list.get(size) != null){
+			//System.out.println("size in Map.java" + size);
 			size++;
 		}
 		return size;

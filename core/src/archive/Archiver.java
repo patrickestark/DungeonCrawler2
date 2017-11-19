@@ -42,7 +42,7 @@ public class Archiver {
 	public static void startArchiver(String directory, String user) {
 		ARCHIVE_DIRECTORY = directory;
 		PROFILE = user;
-		
+		init();
 	}
 	
 	/**
@@ -58,14 +58,16 @@ public class Archiver {
 	private static void init() {
 		updateDIR();
 		load();
-		set(TimeRecords.TIME_IN_GAME, false);
-		set(TimeRecords.TOTAL_TIME_PLAYED, false);
 	}
 	
 	/**
 	 * save() - Saves all 
 	 */
 	private static void save() {
+		for(TimeRecords tr : TimeRecords.values())
+		{
+			set(tr, false);
+		}
 		System.out.println("[Archiver] Saving to: " + DIR);
 		File file = new File(DIR);
 		try {
@@ -136,6 +138,9 @@ public class Archiver {
 	 */
 	public static void set(TotalRecords type, double value) {
 		int index = type.ordinal();
+		
+		if(totalRecords[index] == null)
+			totalRecords[index] = 0.0;
 		totalRecords[index] += value;
 	}
 	

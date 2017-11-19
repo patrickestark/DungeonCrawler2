@@ -1,5 +1,7 @@
 package actors;
 
+import java.util.LinkedList;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -23,20 +25,25 @@ public class RangedBadGuy extends Actor {
 	}
 	
 	public void act(float deltaTime) {
+		
 		float deltaX = player.getPosition().x - x;
 		float deltaY = player.getPosition().y - y;
 		
+		LinkedList<Vector2> path = Map.getPath(new Vector2(player.getPosition().x, player.getPosition().y), new Vector2(deltaX, deltaY));
+		Vector2 lookAt = path.getFirst();
 		
-		float dist = Math.abs(player.getPosition().x-x) + Math.abs(player.getPosition().y-y);
+		float dist = Math.abs(lookAt.x-x) + Math.abs(lookAt.y-y);
 		
 		if(dist > maxDist)
 		{
-			move(deltaTime, Direction.directionTo(x, y, player.getPosition().x, player.getPosition().y), true);
-		} else if(dist < minDist)
+			move(deltaTime, Direction.directionTo(x, y, lookAt.x, lookAt.y), true);
+		} 
+		else if(dist < minDist)
 		{
-			move(deltaTime, Direction.directionTo(player.getPosition().x, player.getPosition().y, x, y), true);
+			move(deltaTime, Direction.directionTo(lookAt.x, lookAt.y, x, y), true);
 		}
 		
+		lookAt = player.getPositionV2();
 
     }
 }
