@@ -19,6 +19,8 @@ public class Map {
 
 	public static final int DIAGONAL_COST = 14;
 	public static final int V_H_COST = 10;
+	public static LinkedList<Vector3> open = new LinkedList<Vector3>();
+	public static LinkedList<Vector3> closed = new LinkedList<Vector3>();
 
 	private static int tilesVertical = 5;
 	private static int tilesHorizontal = 5;
@@ -115,30 +117,45 @@ public class Map {
 	public static LinkedList<Vector2> getPath(Vector2 from, Vector2 to) {
 		// Return a list of Vector2s. Should correspond to tile indices in tiles.
 		LinkedList<Vector2> path = new LinkedList<Vector2>();
-		LinkedList<Vector2> open = new LinkedList<Vector2>();
-		LinkedList<Vector2> closed = new LinkedList<Vector2>();
+		
 
-		boolean walkable;
-		Vector2 startPos = from, endPos = to, current;
+		boolean found = false;
+		Vector2 startPos = from, endPos = to,current, endTest;
+		Vector3 newCurrent;
+		
+        current = startPos;
+		newCurrent = new Vector3(startPos.x,startPos.y,0);
 
-
-		open.add(startPos);
-		current = startPos;
-
-		while ( walkable = true) {
-			open.add(new Vector2(startPos.x + Direction.NORTH.x, startPos.y + Direction.NORTH.y));
-			open.add(new Vector2(startPos.x + Direction.NORTHEAST.x, startPos.y + Direction.NORTHEAST.y));
-			open.add(new Vector2(startPos.x + Direction.NORTHWEST.x, startPos.y + Direction.NORTHWEST.y));
-			open.add(new Vector2(startPos.x + Direction.EAST.x, startPos.y + Direction.EAST.y));
-			open.add(new Vector2(startPos.x + Direction.WEST.x, startPos.y + Direction.WEST.y));
-			open.add(new Vector2(startPos.x + Direction.SOUTH.x, startPos.y + Direction.SOUTH.y));
-			open.add(new Vector2(startPos.x + Direction.SOUTHEAST.x, startPos.y + Direction.SOUTHEAST.y));
-			open.add(new Vector2(startPos.x + Direction.SOUTHWEST.x, startPos.y + Direction.SOUTHWEST.y));
+		while ( found = false) {
 //			new Vector2(startPos.x + Direction.NORTH.x, startPos.y + Direction.NORTH.y);
-         break;
+			
+			findOpen( current, endPos);
+			newCurrent=getLowestFCost(open);
+			
+			closed.add(newCurrent);
+			open.remove(newCurrent);
+			
+			endTest =new Vector2(newCurrent.x,newCurrent.y);
+			
+			if(endTest==endPos) {
+				
+			found = true;
+			
+			}
+			
+			
+			}
+		   for(int count = 0; count < size(closed); count++) {
+			
+			if(closed.get(count).z == newCurrent.z) {
+				
+				path.add(new Vector2(closed.get(count).x,closed.get(count).y));
+				
+			}
 		}
 		
-		return null;
+		
+		return path;
 
 	}
 	public static float getFCost (Vector2 current, Vector2 endPos) {
@@ -156,33 +173,53 @@ public class Map {
 			
 		return  fCost;
 	}
-	public static LinkedList<Vector3> something(Vector2 current, Vector2 endPos)
+	public static void findOpen(Vector2 current, Vector2 endPos)
 	{
-		LinkedList<Vector3> dirCost = new LinkedList<Vector3>();
+		
 		Direction[] dir = new Direction[8];
 		dir = Direction.values();
-		for(int i = 0; i < 7; i++)
-		{
-			dirCost.add(new Vector3(current.x + dir[i].x, current.y = dir[i].y, getFCost(current, endPos)));
-		}
+		Vector2 test;
 		
-		if(current != null)
-		{
-			
-		}
-		return null;
-	}
-	
-	public static Vector3 getLowestFCost(LinkedList<Vector3> dirCost)
-	{
-		int lowestIndex = 0;
 		for(int i = 0; i < 7; i++)
 		{
-			if(dirCost.get(lowestIndex).z > dirCost.get(i + 1).z)
-			{
-				lowestIndex = i + 1;
+			test = new Vector2(current.x + dir[i].x, current.y = dir[i].y);
+			
+			if(test != null) {
+				
+			open.add(new Vector3(current.x + dir[i].x, current.y = dir[i].y, getFCost(current, endPos)));
 			}
 		}
-		return null;
+		
+		
+	}
+	
+	public static Vector3 getLowestFCost(LinkedList<Vector3> open)
+	{
+		int lowestIndex = 0;
+		for(int i = 0; i < size(open); i++)
+		{
+
+			if(open.get(lowestIndex).z > open.get(i + 1).z)
+
+			if(open.get(lowestIndex).z > open.get(i).z)
+
+			{
+				lowestIndex = i;
+			}
+		}
+
+		return open.get(lowestIndex);
+	}
+	
+	public static int size(LinkedList<Vector3> list) {
+		
+		int size=0;
+		
+		while (list.get(size) != null){
+			size++;
+		}
+		return size;
+
+		
 	}
 }
