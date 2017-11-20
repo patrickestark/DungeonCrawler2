@@ -125,13 +125,12 @@ public class Map {
 		
         current = startPos;
 		newCurrent = new Vector3(startPos.x,startPos.y,0);
-
-		while ( found = false) {
+		//System.out.println("Line 134: " + newCurrent.x + " " + newCurrent.y);
+		while ( found == false) {
 //			new Vector2(startPos.x + Direction.NORTH.x, startPos.y + Direction.NORTH.y);
 			
 			findOpen( current, endPos);
 			newCurrent=getLowestFCost(open);
-			
 			closed.add(newCurrent);
 			open.remove(newCurrent);
 			//System.out.println(size(open));
@@ -182,7 +181,7 @@ public class Map {
 		dir = Direction.values();
 		Vector2 test;
 		
-		for(int i = 0; i < 7; i++)
+		for(int i = 0; i < 8; i++)
 		{
 			test = new Vector2(current.x + dir[i].x, current.y = dir[i].y);
 			
@@ -197,7 +196,7 @@ public class Map {
 	
 	public static Vector3 getLowestFCost(LinkedList<Vector3> open)
 	{
-		int lowestIndex = 0;
+		int lowestIndex = 1;
 		for(int i = 0; i < size(open); i++)
 		{
 
@@ -213,11 +212,16 @@ public class Map {
 	
 	public static int size(LinkedList<Vector3> list) {
 		
-		int size=0;
+		int size = 0;
 		
 		while (list.get(size) != null){
-			//System.out.println("size in Map.java" + size);
-			size++;
+			System.out.println("size in Map.java " + size);
+			if( size < 7)
+				size++;
+			else
+				break;
+			
+			//System.out.println("size 2 in Map.java " + size);
 		}
 		return size;
 
