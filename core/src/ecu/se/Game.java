@@ -91,10 +91,11 @@ public class Game extends ApplicationAdapter {
 		ObjectManager.add(new ItemObject(player.getX(), player.getY(), "Sprite LOL", "texture/test/spritePlaceholder.png"));
 		
 		Random random = new Random();
-		for (int i = 0; i < 50; i++) {
-			ObjectManager.add(new RangedBadGuy(random.nextInt(Globals.MAP_TILE_WIDTH * 128),
-					random.nextInt(Globals.MAP_TILE_HEIGHT * 128), 0, map, "texture/spritesheet/goblin_sprites.png",
-					player));
+		for (int i = 0; i < 1; i++) {
+			//ObjectManager.add(new RangedBadGuy(random.nextInt(Globals.MAP_TILE_WIDTH * 128),
+				//	random.nextInt(Globals.MAP_TILE_HEIGHT * 128), 0, map, "texture/spritesheet/goblin_sprites.png",
+					//player));
+			ObjectManager.add(new RangedBadGuy(player.x + 50, player.y + 50, 0, map, "texture/spritesheet/goblin_sprites.png", player));
 		}
 
 		hud = new GUI(player, screenWidth, screenHeight, this);
